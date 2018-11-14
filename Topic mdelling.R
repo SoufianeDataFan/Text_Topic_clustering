@@ -12,6 +12,10 @@ library(SnowballC) # for stemming
 
 Memo=read.csv('path/to/memos.csv')
 
+
+
+
+#-----------------first part data processing concern only my own dataset ! 
 Memo$DATEMEMOs=as.Date(as.POSIXct(Memo$DATEMEMO, origin = "1582-10-14"))
 # View(head(Memo,100))
 MemoAll= Memo 
@@ -21,11 +25,13 @@ Memo=subset(Memo,
               DATEMEMOs < as.Date("2017-31-12", format="%Y-%d-%m"))
 Memo=Df
 memos=Memo$TEXTE
-
+##----------------------
 
 n=round(length(memos)*0.2)
 memos=memos[1:n]
-#Clean Text
+
+# Clean Memos
+
 memos = gsub("(RT|via)((?:\\b\\W*@\\w+)+)","",memos)
 memos = gsub("http[^[:blank:]]+", "", memos)
 memos = gsub("@\\w+", "", memos)
@@ -39,6 +45,8 @@ corpus = tm_map(corpus,stripWhitespace)
 corpus = tm_map(corpus,tolower)
 corpus = tm_map(corpus,removeWords,stopwords("french"))
 tdm = DocumentTermMatrix(corpus) # Creating a Term document Matrix
+
+
 # create tf-idf matrix
 term_tfidf <- tapply(tdm$v/row_sums(tdm)[tdm$i], tdm$j, mean) * log2(nDocs(tdm)/col_sums(tdm > 0))
 summary(term_tfidf)
