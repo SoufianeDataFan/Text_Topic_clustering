@@ -1,5 +1,10 @@
+
+#Author : Soufiane CHAMI
+#Date : Mar 2018
+
+
 library("tm")
-library( doParallel )
+library(doParallel)
 library("wordcloud")
 library("slam")
 library("topicmodels")
@@ -15,7 +20,7 @@ Memo=read.csv('path/to/memos.csv')
 
 
 
-#-----------------first part data processing concern only my own dataset ! 
+#-----------------first part of data processing concern only my own dataset ! 
 Memo$DATEMEMOs=as.Date(as.POSIXct(Memo$DATEMEMO, origin = "1582-10-14"))
 # View(head(Memo,100))
 MemoAll= Memo 
